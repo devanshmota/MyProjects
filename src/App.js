@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 
-const UseEffectAPI = () => {
+export const App = () => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
 
@@ -76,7 +76,3 @@ const UseEffectAPI = () => {
     </>
   );
 };
-
-export function App() {
-  return <UseEffectAPI />;
-}
