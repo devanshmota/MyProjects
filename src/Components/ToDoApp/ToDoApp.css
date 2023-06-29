@@ -1,0 +1,22 @@
+.todoapp {
+    height: 100vh;
+}
+
+.bgcolor {
+    background-color: #454545;
+    color: white;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.toDoapp.card {
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+}
+
+input.form-control:focus {
+
+    box-shadow: none;
+
+}

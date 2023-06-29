@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import "./App.css";
+import { useState } from "react";
 
-export const App = () => {
+export const GithubUserFinder = () => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
 
-  const getUsers = async () => {
+  const getUsers = async (event) => {
+    event.preventDefault();
     const response = await fetch(
       "https://api.github.com/search/users?q=" + search
     );
@@ -13,16 +13,16 @@ export const App = () => {
     setUsers(data.items);
   };
 
-  const submit = async (event) => {
-    event.preventDefault();
-    getUsers();
-  };
+  // const submit = async (event) => {
+  //   event.preventDefault();
+  //   getUsers();
+  // };
 
   return (
     <>
       <div className="container">
         <div className="row text-center">
-          <form onSubmit={submit}>
+          <form onSubmit={getUsers}>
             <div className="row mt-5">
               <div className="col-sm-3"></div>
               <div className="col-sm-6">
@@ -31,17 +31,13 @@ export const App = () => {
                     id="search"
                     value={search}
                     type="text"
-                    className="form-control"
+                    className="form-control me-1"
                     placeholder="Search A Github User"
                     onChange={(event) => setSearch(event.target.value)}
                   />
 
-                  <div className="input-group-append">
-                    <button
-                      className="btn btn-primary"
-                      type="button"
-                      onClick={getUsers}
-                    >
+                  <div className="input-group-append ms-1">
+                    <button className="btn btn-primary" type="submit">
                       Search
                     </button>
                   </div>
