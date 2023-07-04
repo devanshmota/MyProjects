@@ -1,12 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
 export const Navigation = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link className="navbar-brand" href="#">
-          Navbar
-        </Link>
+        <NavLink className="navbar-brand" to="/">
+          React Components
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -21,38 +22,39 @@ export const Navigation = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to="/" className="nav-link active" aria-current="page">
+              <NavLink exact to="/" className="nav-link" activeClassName="active">
                 Home
-              </Link>
-
+              </NavLink>
             </li>
-
             <li className="nav-item dropdown">
-              <Link
+              <NavLink
+                to="/components"
                 className="nav-link dropdown-toggle"
-                to="#"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                activeClassName="active"
               >
                 Components
-              </Link>
+              </NavLink>
               <ul className="dropdown-menu">
                 <li>
-                  <Link to="/githubuserfinder" className="dropdown-item">
+                  <NavLink to="/githubuserfinder" className="dropdown-item" activeClassName="active">
                     GitHub User Finder
-                  </Link>
-                  <Link to="/calculator" className="dropdown-item">
+                  </NavLink>
+                  <NavLink to="/calculator" className="dropdown-item" activeClassName="active">
                     Calculator
-                  </Link>
-                  <Link to="/todoapp" className="dropdown-item">
+                  </NavLink>
+                  <NavLink to="/todoapp" className="dropdown-item" activeClassName="active">
                     ToDo App
-                  </Link>
+                  </NavLink>
+                  <NavLink to="/textanalyzer" className="dropdown-item" activeClassName="active">
+                    Text Analyzer
+                  </NavLink>
                 </li>
               </ul>
             </li>
           </ul>
-
         </div>
       </div>
     </nav>

@@ -87,7 +87,7 @@ export function ToDoApp() {
                     <h5 className={`card-title text-black ${card.isClicked ? 'text-decoration-line-through' : ''}`}>{card.title}</h5>
                     <p className={`card-text ${card.isClicked ? 'text-decoration-line-through' : ''}`}>{card.description}</p>
                     <button className="btn btn-success me-1" onClick={() => handleCardClick(card.id)}><i className="fa-solid fa-check-double"></i></button>
-                    <button className="btn btn-danger ms-1"><i className="fa fa-times" aria-hidden="true" onClick={() => handleRemoveIcon(card.id)}></i></button>
+                    <button className="btn btn-danger ms-1" onClick={() => handleRemoveIcon(card.id)}><i className="fa fa-times" aria-hidden="true" ></i></button>
                   </div>
                 </div>
               </div>))}

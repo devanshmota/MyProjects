@@ -6,6 +6,7 @@ import { Navigation } from "./Components/Navigation";
 import { GithubUserFinder } from "./Components/GithubUserFinder";
 import { Calculator } from "./Components/Calculator/Calculator";
 import { ToDoApp } from "./Components/ToDoApp/ToDoApp";
+import TextAnalyzer from "./Components/Text Analyzer/TextAnalyzer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -24,6 +25,8 @@ root.render(
       <Route path="/githubuserfinder" element={<GithubUserFinder />} />
       <Route path="/calculator" element={<Calculator />} />
       <Route path="/todoapp" element={<ToDoApp />} />
+      <Route path="/textanalyzer" element={<TextAnalyzer />} />
+
 
     </Routes>
   </BrowserRouter>

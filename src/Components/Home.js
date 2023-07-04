@@ -1,7 +1,8 @@
 export const Home = () => {
   return (
-    <div className="text-center">
-      <h1>My React components.</h1>
+    <div className="home">
+      <h1>Welcome To Home</h1>
     </div>
+
   );
 };
