@@ -1,29 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './ToDoApp.css';
+import axios from 'axios';
 
 export function ToDoApp() {
-  // const [showCard, setShowCard] = useState(true);
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [allcards, setAllCard] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [allcards, setAllCard] = useState([])
+
+  useEffect(() => {
+
+    axios.get("http://localhost:3001/api/card")
+      .then((res) => {
+        const cards = res.data;
+        setAllCard(cards);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      })
+
+
+  }, []);
 
 
   const handleRemoveIcon = (id) => {
-    setAllCard((allcards) => allcards.filter((card) => card.id !== id))
+    axios.delete(`http://localhost:3001/api/card/${id}`)
+      .then(res => {
+        if (res.data.success) {
+          // console.log(res.data.success);
+          setAllCard(allcards.filter((card) => card.id !== id));
+        } else {
+          console.error(res.data.error);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
+
   const handleAdd = (e) => {
     e.preventDefault();
 
     if (title && description) {
-      const newCard = {
+      let newCard = {
         id: Date.now(),
         title: title,
         description: description,
-        isClicked: false
+        isComplete: false
       };
-      setAllCard([...allcards, newCard]);
-      setTitle("");
-      setDescription("");
+
+      const api_endpoint = "http://localhost:3001/api/card";
+
+      axios.post(api_endpoint, newCard)
+        .then(response => {
+          console.log(response.data);
+          setAllCard([...allcards, newCard]);
+          setTitle("");
+          setDescription("");
+
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+
     }
     else {
       alert("Please Fill The Deatils");
@@ -31,24 +70,28 @@ export function ToDoApp() {
   }
 
   const handleCardClick = (id) => {
-    setAllCard((allcards) =>
-      allcards.map((card) =>
-        card.id === id ? { ...card, isClicked: !card.isClicked } : card)
 
-    );
+    allcards.map((card) => {
+      if (card.id === id) {
+        const updatedCard = { ...card, isComplete: !card.isComplete };
+        axios.put(`http://localhost:3001/api/card/${id}`, updatedCard)
+          .then(() => {
+            // If the update is successful, update the state
+            setAllCard(allcards.map((c) => (c.id === id ? updatedCard : c)));
+          })
+          .catch((error) => {
+            console.error("Failed to update the card:", error);
+          });
+        return updatedCard;
+      } else {
+        return card;
+      }
+    })
   };
 
   return (
     <>
-      <div className="container-fluid todoapp">
-        {/* <div className="row">
-          <div
-
-            className="col-sm-12 text-white p-4 text-center h2 bgcolor"
-          >
-            ToDo App
-          </div>
-        </div> */}
+      <div className="container-fluid todoapp-full">
         <div className="row mt-5">
           <div className="col-sm-8 offset-sm-2 text-center">
             <div className="row">
@@ -75,7 +118,7 @@ export function ToDoApp() {
                 </form>
               </div>
               <div className="col-sm-2">
-                <button type="submit" className="btn btn-primary" onClick={handleAdd}>
+                <button type="submit" className="todoapp btn btn-primary" onClick={handleAdd}>
                   Add
                 </button>
               </div>
@@ -84,8 +127,8 @@ export function ToDoApp() {
               {allcards.map((card) => (<div key={card.id} className="col-sm-6 mt-4">
                 <div className="card">
                   <div className="card-body">
-                    <h5 className={`card-title text-black ${card.isClicked ? 'text-decoration-line-through' : ''}`}>{card.title}</h5>
-                    <p className={`card-text ${card.isClicked ? 'text-decoration-line-through' : ''}`}>{card.description}</p>
+                    <h5 className={`card-title text-black ${card.isComplete ? 'text-decoration-line-through' : ''}`}>{card.title}</h5>
+                    <p className={`card-text ${card.isComplete ? 'text-decoration-line-through' : ''}`}>{card.description}</p>
                     <button className="btn btn-success me-1" onClick={() => handleCardClick(card.id)}><i className="fa-solid fa-check-double"></i></button>
                     <button className="btn btn-danger ms-1" onClick={() => handleRemoveIcon(card.id)}><i className="fa fa-times" aria-hidden="true" ></i></button>
                   </div>

@@ -1,4 +1,4 @@
-.todoapp {
+.todoapp-full {
     height: 100vh;
 }
 
@@ -7,7 +7,7 @@
     color: white;
 }
 
-.btn-primary {
+.todoapp.btn-primary {
     width: 100%;
 }
 

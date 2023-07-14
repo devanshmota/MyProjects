@@ -41,58 +41,67 @@ const TextAnalyzer = () => {
     setText(capitalizedParagraph);
   };
   return (
+
     <div className="text-analyzer p-4 dark">
-      <div className="heading-dark"><h1 className="mb-3">Enter Your Text To Analayze</h1>
-        <div className="form-check form-switch">
-          <input
-            className="form-check-input me-2"
-            checked={toggle}
-            type="checkbox"
-            role="switch"
-            id="flexSwitchCheckDefault"
-            onChange={handleToggle}
-          />
-          <label
-            className={`form-check-label ${toggle ? "text-white" : "text-black"
-              }`}
-            htmlFor="flexSwitchCheckDefault"
-          >
-            Dark Mode
-          </label>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-10 offset-1">
+            <div className="heading-dark"><h1 className="mb-3">Enter Your Text To Analayze</h1>
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input me-2"
+                  checked={toggle}
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  onChange={handleToggle}
+                />
+                <label
+                  className={`form-check-label ${toggle ? "text-white" : "text-black"
+                    }`}
+                  htmlFor="flexSwitchCheckDefault"
+                >
+                  Dark Mode
+                </label>
+              </div>
+            </div>
+            <textarea
+              className={`form-control ${toggle ? "darkMode" : ""}`}
+              value={text}
+              id="textbox"
+              rows="8"
+              onChange={HandleOnChange}
+            ></textarea>
+
+            <button
+              type="button"
+              className="btn btn-success mt-3"
+              onClick={Uppercase}
+            >
+              UPPERCASE
+            </button>
+            <button
+              type="button"
+              className="btn btn-success mt-3 mx-2"
+              onClick={Lowercase}
+            >
+              lowercase
+            </button>
+            <button
+              type="button"
+              className="btn btn-success mt-3"
+              onClick={CapitalizedCase}
+            >
+              Capitalized Case
+            </button>
+          </div>
         </div>
       </div>
-
-
-      <textarea
-        className={`form-control ${toggle ? "darkMode" : ""}`}
-        value={text}
-        id="textbox"
-        rows="8"
-        onChange={HandleOnChange}
-      ></textarea>
-
-      <button
-        type="button"
-        className="btn btn-success mt-3"
-        onClick={Uppercase}
-      >
-        UPPERCASE
-      </button>
-      <button
-        type="button"
-        className="btn btn-success mt-3 mx-2"
-        onClick={Lowercase}
-      >
-        lowercase
-      </button>
-      <button
-        type="button"
-        className="btn btn-success mt-3"
-        onClick={CapitalizedCase}
-      >
-        Capitalized Case
-      </button>
     </div>
+
+
+
+
   );
 };
 
