@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import './TextAnalyzer.css'
 const TextAnalyzer = () => {
+  const [text, setText] = useState("");
   const [toggle, setToggle] = useState(false);
-
+  const [copiedText, setCopiedText] = useState("");
 
   const handleToggle = (e) => {
     const isChecked = e.target.checked;
     setToggle(isChecked);
   };
-
-
 
   useEffect(() => {
     const textAnalyzerElem = document.querySelector(".text-analyzer");
@@ -21,17 +20,17 @@ const TextAnalyzer = () => {
     }
   }, [toggle]);
 
-
-  const [text, setText] = useState("");
   const HandleOnChange = (e) => {
     setText(e.target.value);
   };
   const Uppercase = () => {
     setText(text.toUpperCase());
   };
+
   const Lowercase = () => {
     setText(text.toLowerCase());
   };
+
   const CapitalizedCase = () => {
     const words = text.split(" ");
     const capitalizedWords = words.map((word) => {
@@ -40,10 +39,27 @@ const TextAnalyzer = () => {
     const capitalizedParagraph = capitalizedWords.join(" ");
     setText(capitalizedParagraph);
   };
+
+  const Copy = async () => {
+    await navigator.clipboard.writeText(text);
+    setCopiedText("Text copied to clipboard!");
+
+    setTimeout(() => {
+      setCopiedText("");
+    }, 3000);
+
+  };
+
+  const Clear = () => {
+    setText("");
+    const inputField = document.getElementById("textbox");
+    inputField.focus();
+  }
   return (
 
     <div className="text-analyzer p-4 dark">
       <div className="container">
+
         <div className="row">
           <div className="col-sm-10 offset-1">
             <div className="heading-dark"><h1 className="mb-3">Enter Your Text To Analayze</h1>
@@ -65,6 +81,15 @@ const TextAnalyzer = () => {
                 </label>
               </div>
             </div>
+
+            {copiedText && (
+              <div className="alert alert-success" role="alert">
+                {copiedText}
+              </div>
+            )}
+
+
+
             <textarea
               className={`form-control ${toggle ? "darkMode" : ""}`}
               value={text}
@@ -93,6 +118,20 @@ const TextAnalyzer = () => {
               onClick={CapitalizedCase}
             >
               Capitalized Case
+            </button>
+            <button
+              type="button"
+              className="btn btn-success mt-3 ms-2"
+              onClick={Copy}
+            >
+              Copy To Clipboard
+            </button>
+            <button
+              type="button"
+              className="btn btn-success mt-3 ms-2"
+              onClick={Clear}
+            >
+              Clear
             </button>
           </div>
         </div>

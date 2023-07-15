@@ -22,7 +22,7 @@ export const Navigation = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <NavLink exact to="/" className="nav-link" activeClassName="active">
+              <NavLink to="/" className="nav-link" activeclassname="active">
                 Home
               </NavLink>
             </li>
@@ -33,22 +33,22 @@ export const Navigation = () => {
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                activeClassName="active"
+                activeclassname="active"
               >
                 Components
               </NavLink>
               <ul className="dropdown-menu">
                 <li>
-                  <NavLink to="/githubuserfinder" className="dropdown-item" activeClassName="active">
+                  <NavLink to="/githubuserfinder" className="dropdown-item" activeclassname="active">
                     GitHub User Finder
                   </NavLink>
-                  <NavLink to="/calculator" className="dropdown-item" activeClassName="active">
+                  <NavLink to="/calculator" className="dropdown-item" activeclassname="active">
                     Calculator
                   </NavLink>
-                  <NavLink to="/todoapp" className="dropdown-item" activeClassName="active">
-                    ToDo App
+                  <NavLink to="/todoapp" className="dropdown-item" activeclassname="active">
+                    ToDo App With MongoDB
                   </NavLink>
-                  <NavLink to="/textanalyzer" className="dropdown-item" activeClassName="active">
+                  <NavLink to="/textanalyzer" className="dropdown-item" activeclassname="active">
                     Text Analyzer
                   </NavLink>
                 </li>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from 'axios';
 
 export const GithubUserFinder = () => {
   const [search, setSearch] = useState("");
@@ -6,11 +7,11 @@ export const GithubUserFinder = () => {
 
   const getUsers = async (event) => {
     event.preventDefault();
-    const response = await fetch(
+    const response = await axios(
       "https://api.github.com/search/users?q=" + search
     );
-    const data = await response.json();
-    setUsers(data.items);
+
+    setUsers(response.data.items);
   };
 
   // const submit = async (event) => {
@@ -47,9 +48,9 @@ export const GithubUserFinder = () => {
             </div>
           </form>
 
-          {users.map((user) => {
+          {users.map((user, index) => {
             return (
-              <div className="col-sm-3 mt-5">
+              <div className="col-sm-3 mt-5" key={index}>
                 <div className="card">
                   <img
                     src={user.avatar_url}
