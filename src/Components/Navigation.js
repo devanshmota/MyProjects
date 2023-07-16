@@ -46,7 +46,7 @@ export const Navigation = () => {
                     Calculator
                   </NavLink>
                   <NavLink to="/todoapp" className="dropdown-item" activeclassname="active">
-                    ToDo App With MongoDB
+                    ToDo App (MongoDB)
                   </NavLink>
                   <NavLink to="/textanalyzer" className="dropdown-item" activeclassname="active">
                     Text Analyzer
