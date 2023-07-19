@@ -26,8 +26,8 @@ app.listen(port, () => {
 
 const todoSchema = mongoose.Schema({
     id: Number,
-    title: String,
-    description: String,
+    rtitle: String,
+    rdescription: String,
     isComplete: Boolean
 });
 
@@ -36,13 +36,12 @@ const Card = mongoose.model('Card', todoSchema);
 app.use(express.json());
 
 app.post('/api/card', async (req, res) => {
-    const { id, title, description, isComplete } = req.body;
-
+    const { id, rtitle, rdescription, isComplete } = req.body;
     const newCard = new Card({
-        id: id,
-        title: title,
-        description: description,
-        isComplete: isComplete
+        id,
+        rtitle,
+        rdescription,
+        isComplete
     });
 
     await newCard.save()
@@ -57,7 +56,7 @@ app.post('/api/card', async (req, res) => {
 app.get('/api/card', async (req, res) => {
     try {
         const cards = await Card.find();
-        console.log(cards);
+
         res.send(cards);
 
     }

@@ -1,24 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import './ToDoApp.css';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import titleSlice from "../../Data/titleSlice";
+import descriptionSlice from "../../Data/descriptionSlice";
+import allcardSlice from "../../Data/allcardSlice";
 
 export function ToDoApp() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [allcards, setAllCard] = useState([])
+
+  const { rtitle } = useSelector((state) => state.title)
+  const { rdescription } = useSelector((state) => state.description)
+  const { rcards } = useSelector((state) => state.allcards)
+
+  const { setTitle } = titleSlice.actions
+  const { setDescription } = descriptionSlice.actions
+  const { setAllCard } = allcardSlice.actions
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-
     axios.get("http://localhost:3001/api/card")
       .then((res) => {
         const cards = res.data;
-        setAllCard(cards);
+        dispatch(setAllCard(cards));
       })
       .catch((err) => {
         console.log("error", err);
       })
-
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -26,8 +35,7 @@ export function ToDoApp() {
     axios.delete(`http://localhost:3001/api/card/${id}`)
       .then(res => {
         if (res.data.success) {
-          // console.log(res.data.success);
-          setAllCard(allcards.filter((card) => card.id !== id));
+          dispatch(setAllCard(rcards.filter((card) => card.id !== id)));
         } else {
           console.error(res.data.error);
         }
@@ -40,11 +48,11 @@ export function ToDoApp() {
   const handleAdd = (e) => {
     e.preventDefault();
 
-    if (title && description) {
+    if (rtitle && rdescription) {
       let newCard = {
         id: Date.now(),
-        title: title,
-        description: description,
+        rtitle,
+        rdescription,
         isComplete: false
       };
 
@@ -52,11 +60,9 @@ export function ToDoApp() {
 
       axios.post(api_endpoint, newCard)
         .then(response => {
-          console.log(response.data);
-          setAllCard([...allcards, newCard]);
-          setTitle("");
-          setDescription("");
-
+          dispatch(setAllCard([...rcards, newCard]));
+          dispatch(setTitle(""));
+          dispatch(setDescription(""));
         })
         .catch(error => {
           console.error(error);
@@ -71,22 +77,19 @@ export function ToDoApp() {
 
   const handleCardClick = (id) => {
 
-    allcards.map((card) => {
-      if (card.id === id) {
-        const updatedCard = { ...card, isComplete: !card.isComplete };
-        axios.put(`http://localhost:3001/api/card/${id}`, updatedCard)
-          .then(() => {
-            // If the update is successful, update the state
-            setAllCard(allcards.map((c) => (c.id === id ? updatedCard : c)));
-          })
-          .catch((error) => {
-            console.error("Failed to update the card:", error);
-          });
-        return updatedCard;
-      } else {
-        return card;
-      }
-    })
+    const updatedCards = rcards.map((card) =>
+      card.id === id ? { ...card, isComplete: !card.isComplete } : card);
+
+    const updatedCard = updatedCards.find((card) => card.id === id);
+
+    axios
+      .put(`http://localhost:3001/api/card/${id}`, updatedCard)
+      .then(() => {
+        dispatch(setAllCard(updatedCards));
+      })
+      .catch((error) => {
+        console.error("Failed to update the card:", error);
+      });
   };
 
   return (
@@ -100,9 +103,10 @@ export function ToDoApp() {
                   <input
                     type="text"
                     className="form-control"
-                    value={title}
+                    value={rtitle}
                     placeholder="Enter Title"
-                    onChange={(e) => { setTitle(e.target.value) }}
+                    // onChange={(e) => { setTitle(e.target.value) }}
+                    onChange={(e) => dispatch(setTitle(e.target.value))}
                   />
                 </form>
               </div>
@@ -110,8 +114,9 @@ export function ToDoApp() {
                 <form onSubmit={handleAdd}>
                   <input
                     type="text"
-                    value={description}
-                    onChange={(e) => { setDescription(e.target.value) }}
+                    value={rdescription}
+                    // onChange={(e) => { setDescription(e.target.value) }}
+                    onChange={(e) => dispatch(setDescription(e.target.value))}
                     className="form-control"
                     placeholder="Enter Description"
                   />
@@ -124,11 +129,11 @@ export function ToDoApp() {
               </div>
             </div>
             <div className="row mt-3">
-              {allcards.map((card) => (<div key={card.id} className="col-sm-6 mt-4">
+              {rcards.map((card) => (<div key={card.id} className="col-sm-6 mt-4">
                 <div className="card">
                   <div className="card-body">
-                    <h5 className={`card-title text-black ${card.isComplete ? 'text-decoration-line-through' : ''}`}>{card.title}</h5>
-                    <p className={`card-text ${card.isComplete ? 'text-decoration-line-through' : ''}`}>{card.description}</p>
+                    <h5 className={`card-title text-black ${card.isComplete ? 'text-decoration-line-through' : ''}`}>{card.rtitle}</h5>
+                    <p className={`card-text ${card.isComplete ? 'text-decoration-line-through' : ''}`}>{card.rdescription}</p>
                     <button className="btn btn-success me-1" onClick={() => handleCardClick(card.id)}><i className="fa-solid fa-check-double"></i></button>
                     <button className="btn btn-danger ms-1" onClick={() => handleRemoveIcon(card.id)}><i className="fa fa-times" aria-hidden="true" ></i></button>
                   </div>
