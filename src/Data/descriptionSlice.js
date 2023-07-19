@@ -12,4 +12,5 @@ const descriptionSlice = createSlice({
     }
 })
 
-export default descriptionSlice
+export default descriptionSlice;
+export const { setDescription } = descriptionSlice.actions;

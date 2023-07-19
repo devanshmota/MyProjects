@@ -13,3 +13,4 @@ const titleSlice = createSlice({
 })
 
 export default titleSlice
+export const { setTitle } = titleSlice.actions;

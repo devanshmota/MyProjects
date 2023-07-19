@@ -2,19 +2,15 @@ import React, { useEffect } from "react";
 import './ToDoApp.css';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import titleSlice from "../../Data/titleSlice";
-import descriptionSlice from "../../Data/descriptionSlice";
-import allcardSlice from "../../Data/allcardSlice";
+import { setTitle } from "../../Data/titleSlice";
+import { setDescription } from "../../Data/descriptionSlice";
+import { setAllCard } from "../../Data/allcardSlice";
 
 export function ToDoApp() {
 
   const { rtitle } = useSelector((state) => state.title)
   const { rdescription } = useSelector((state) => state.description)
   const { rcards } = useSelector((state) => state.allcards)
-
-  const { setTitle } = titleSlice.actions
-  const { setDescription } = descriptionSlice.actions
-  const { setAllCard } = allcardSlice.actions
 
   const dispatch = useDispatch();
 
@@ -29,7 +25,6 @@ export function ToDoApp() {
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   const handleRemoveIcon = (id) => {
     axios.delete(`http://localhost:3001/api/card/${id}`)

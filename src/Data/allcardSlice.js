@@ -12,4 +12,5 @@ const allcardSlice = createSlice({
     }
 })
 
-export default allcardSlice
+export default allcardSlice;
+export const { setAllCard } = allcardSlice.actions;
