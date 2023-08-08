@@ -81,10 +81,13 @@ export function ToDoApp() {
       .put(`http://localhost:3001/api/card/${id}`, updatedCard)
       .then(() => {
         dispatch(setAllCard(updatedCards));
+      }).then(() => {
+        console.log(rcards)
       })
       .catch((error) => {
         console.error("Failed to update the card:", error);
       });
+
   };
 
   return (

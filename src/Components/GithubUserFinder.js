@@ -14,11 +14,6 @@ export const GithubUserFinder = () => {
     setUsers(response.data.items);
   };
 
-  // const submit = async (event) => {
-  //   event.preventDefault();
-  //   getUsers();
-  // };
-
   return (
     <>
       <div className="container">

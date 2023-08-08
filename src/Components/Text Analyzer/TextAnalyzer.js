@@ -137,10 +137,6 @@ const TextAnalyzer = () => {
         </div>
       </div>
     </div>
-
-
-
-
   );
 };
 

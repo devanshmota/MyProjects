@@ -24,8 +24,6 @@ export function Calculator() {
   return (
     <>
       <div className="full">
-
-
         <div className="container text-center calculator">
           <input className="calcInput" type="text" value={input} readOnly /> <br />
           <div className="button-row">
