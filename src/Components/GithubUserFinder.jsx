@@ -10,42 +10,39 @@ export const GithubUserFinder = () => {
     const response = await axios(
       "https://api.github.com/search/users?q=" + search
     );
-
     setUsers(response.data.items);
   };
 
   return (
     <>
-      <div className="container">
-        <div className="row text-center">
-          <form onSubmit={getUsers}>
-            <div className="row mt-5">
-              <div className="col-sm-3"></div>
-              <div className="col-sm-6">
-                <div className="input-group">
-                  <input
-                    id="search"
-                    value={search}
-                    type="text"
-                    className="form-control me-1"
-                    placeholder="Search A Github User"
-                    onChange={(event) => setSearch(event.target.value)}
-                  />
-
-                  <div className="input-group-append ms-1">
-                    <button className="btn btn-primary" type="submit">
-                      Search
-                    </button>
-                  </div>
+      <div className="container my-5">
+        <div className="row mb-5">
+          <div className="col-12">
+            <form onSubmit={getUsers} className="mx-auto col-12 col-md-6">
+              <div className="input-group">
+                <input
+                  id="search"
+                  value={search}
+                  type="text"
+                  className="form-control me-1"
+                  placeholder="Search A Github User"
+                  onChange={(event) => setSearch(event.target.value)}
+                  required
+                />
+                <div className="input-group-append ms-1">
+                  <button className="btn btn-primary" type="submit">
+                    Search
+                  </button>
                 </div>
               </div>
-              <div className="col-sm-3"></div>
-            </div>
-          </form>
+            </form>
+          </div>
+        </div>
+        <div className="row row-gap-4">
 
           {users.map((user, index) => {
             return (
-              <div className="col-sm-3 mt-5" key={index}>
+              <div className="col-xl-3 col-lg-4 col-sm-6" key={index}>
                 <div className="card">
                   <img
                     src={user.avatar_url}

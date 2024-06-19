@@ -18,3 +18,23 @@ textarea#textbox.darkMode {
     background-color: #212529;
     color: white;
 }
+
+
+@media (max-width: 767px){
+    .dark_toggle{
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 0;
+        
+    }
+    .dark_toggle input{
+        padding: 0;
+        margin: 0 !important;
+        align-self: flex-end;
+    }
+    .dark_toggle label{
+        text-align: right;
+    }
+}
+

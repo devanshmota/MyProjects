@@ -5,15 +5,12 @@
 }
 
 .full {
-    height: 100vh;
+    height: calc(100vh - 56px);
     display: flex;
     align-items: center;
 }
 
-.calculator {
-    width: 20%;
 
-}
 
 
 .calcInput {

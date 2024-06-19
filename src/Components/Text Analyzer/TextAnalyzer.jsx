@@ -3,7 +3,6 @@ import './TextAnalyzer.css'
 const TextAnalyzer = () => {
   const [text, setText] = useState("");
   const [toggle, setToggle] = useState(false);
-  const [copiedText, setCopiedText] = useState("");
 
   const handleToggle = (e) => {
     const isChecked = e.target.checked;
@@ -23,47 +22,63 @@ const TextAnalyzer = () => {
   const HandleOnChange = (e) => {
     setText(e.target.value);
   };
+  
   const Uppercase = () => {
+    if(text.trim() === ''){
+      alert('Please enter your text')
+      return
+    }
     setText(text.toUpperCase());
   };
 
   const Lowercase = () => {
+    if(text.trim() === ''){
+      alert('Please enter your text')
+      return
+    }
     setText(text.toLowerCase());
   };
 
   const CapitalizedCase = () => {
-    const words = text.split(" ");
+    if (text.trim() === '') {
+      alert('Please enter your text');
+      return;
+    }
+    const words = text.split(' ').filter(word => word !== '');
     const capitalizedWords = words.map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     });
-    const capitalizedParagraph = capitalizedWords.join(" ");
+    const capitalizedParagraph = capitalizedWords.join(' ');
     setText(capitalizedParagraph);
   };
 
   const Copy = async () => {
+    if(text.trim() === ''){
+      alert('Please enter your text')
+      return
+    }
     await navigator.clipboard.writeText(text);
-    setCopiedText("Text copied to clipboard!");
-
-    setTimeout(() => {
-      setCopiedText("");
-    }, 3000);
-
+    alert('Text copied to clipboard')
   };
 
   const Clear = () => {
+    if(text.trim() === ''){
+      alert('Input field is already cleared')
+      return
+    }
     setText("");
     const inputField = document.getElementById("textbox");
     inputField.focus();
   }
   return (
 
-    <div className="text-analyzer p-4 dark">
+    <div className="text-analyzer pt-4 dark">
       <div className="container">
 
         <div className="row">
-          <div className="col-sm-10 offset-1">
+          <div className="col-sm-12">
             <div className="heading-dark"><h1 className="mb-3">Enter Your Text To Analayze</h1>
-              <div className="form-check form-switch">
+              <div className="form-check form-switch dark_toggle">
                 <input
                   className="form-check-input me-2"
                   checked={toggle}
@@ -82,14 +97,7 @@ const TextAnalyzer = () => {
               </div>
             </div>
 
-            {copiedText && (
-              <div className="alert alert-success" role="alert">
-                {copiedText}
-              </div>
-            )}
-
-
-
+            
             <textarea
               className={`form-control ${toggle ? "darkMode" : ""}`}
               value={text}
